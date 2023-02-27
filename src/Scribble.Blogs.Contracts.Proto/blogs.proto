@@ -1,0 +1,70 @@
+syntax = "proto3";
+
+option csharp_namespace = "Scribble.Blogs.Contracts.Proto";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/empty.proto";
+
+package Scribble.Blogs.Contracts.Proto;
+
+service BlogProtoService {
+  rpc GetById (GetByIdGrpcRequest) returns (BlogModel);
+  rpc GetPagedBlogs (GetPagedBlogsGrpcRequest) returns (GetPagedBlogsGrpcResponse);
+  rpc GetBlogsByAuthorId (GetBlogsByAuthorIdRequest) returns (GetBlogsByAuthorIdResponse);
+  rpc Create (CreateGrpcRequest) returns (CreateGrpcResponse);
+  rpc Update (UpdateGrpcRequest) returns (google.protobuf.Empty);
+  rpc Delete (DeleteGrpcRequest) returns (google.protobuf.Empty);
+  rpc Exists (ExistsGrpcRequest) returns (ExistsGrpcResponse);
+}
+
+message GetByIdGrpcRequest {
+  string Id = 1;
+}
+
+message GetPagedBlogsGrpcRequest {
+  int32 pageIndex = 1;
+  int32 pageSize = 2;
+}
+
+message GetPagedBlogsGrpcResponse {
+  repeated BlogModel Models = 1;
+}
+
+message GetBlogsByAuthorIdRequest {
+  string AuthorId = 1;
+}
+
+message GetBlogsByAuthorIdResponse {
+  repeated BlogModel Models = 1;
+}
+
+message CreateGrpcRequest {
+  BlogModel Model = 1;
+}
+
+message CreateGrpcResponse {
+  string Id = 1;
+}
+
+message UpdateGrpcRequest {
+  BlogModel Model = 1;
+}
+
+message DeleteGrpcRequest {
+  string Id = 1;
+}
+
+message ExistsGrpcRequest {
+  string Id = 1;
+}
+
+message ExistsGrpcResponse {
+  bool Status = 1;
+}
+
+message BlogModel {
+  string Id = 1;
+  string AuthorId = 2;
+  string Title = 3;
+  google.protobuf.Timestamp CreatedAt = 4;
+}
